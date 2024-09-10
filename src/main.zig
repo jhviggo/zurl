@@ -1,5 +1,6 @@
 const std = @import("std");
 const argumentParser = @import("./argumentParser.zig");
+const httpHandler = @import("./httpHandler.zig");
 
 pub fn main() !void {
     std.debug.print("All your {s} are belong to us.\n", .{"codebase"});
@@ -19,4 +20,6 @@ pub fn main() !void {
     while (it.next()) |entry| {
         std.debug.print("Key: {s}, Value: {s}\n", .{ entry.key_ptr.*, entry.value_ptr.* });
     }
+    const url: []u8 = map.get("url") orelse unreachable;
+    try httpHandler.handleHttpRequest(url);
 }
